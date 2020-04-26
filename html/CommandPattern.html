@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Command Pattern</title>
+    <style>
+img {
+  opacity: 0.9;
+}
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+.right {
+  position: absolute;
+  right: 150px;
+}
+text {
+    font-size:15px;
+}
+code {
+    column-gap: 40px;
+}
+</style>
+</head>
+<body>
+<h3 style="color:red"><u>Command Pattern</u></h3>
+<a style="font-size:15px;">The command pattern is a behavioral design pattern in which an object is used to encapsulate
+    all information needed to perform an action or trigger an event at a later time</a>
+
+<h4><b><u>Steps</u></b></h4>
+<text> Step 1</text>
+<text> Create a <u style="color:red"> ActionListernerCommand </u> interface that will act as a Command. </text>
+<br/>
+<code>
+    public interface ActionListenerCommand { </br>
+public void execute();</br>
+}</br>
+</code>
+<br>
+<br>
+<text> Step 2</text>
+<text> Create a class <u style="color:red"> Document </u></text>
+<br/>
+<br>
+<code>
+    public class Document { </br>
+    public void open(){</br>
+    System.out.println("Document Opened");</br>
+    }</br>
+    public void save(){</br>
+    System.out.println("Document Saved");</br>
+    }</br>
+    }</br>
+</br>
+</code>
+<br>
+<br>
+<text> Step 3</text>
+<text> Create a class <u style="color:red"> ActionOpen </u></text>
+<br/>
+<br>
+<code>
+public class ActionOpen implements ActionListenerCommand{</br>
+private Document doc;</br>
+public ActionOpen(Document doc) {</br>
+this.doc = doc;</br>
+}</br>
+@Override</br>
+public void execute() {</br>
+doc.open();</br>
+}</br>
+}</br>
+</br>
+</code>
+<br>
+<br>
+<text> Step 4</text>
+<text> Create a class <u style="color:red"> ActionSave </u></text>
+<br/>
+<br/>
+<code>
+public class ActionSave implements ActionListenerCommand{<br/>
+private Document doc;<br/>
+public ActionSave(Document doc) {<br/>
+this.doc = doc;<br/>
+}<br/>
+@Override<br/>
+public void execute() {<br/>
+doc.save();<br/>
+}<br/>
+}<br/>
+</br>
+</code>
+<br>
+<br>
+<text> Step 5</text>
+<text> Create a class <u style="color:red"> MenuOptions </u></text>
+<br/>
+<br/>
+<code>
+private ActionListenerCommand openCommand;<br/>
+private ActionListenerCommand saveCommand;<br/>
+
+public MenuOptions(ActionListenerCommand open, ActionListenerCommand save) {<br/>
+this.openCommand = open;<br/>
+this.saveCommand = save;<br/>
+}<br/>
+public void clickOpen(){<br/>
+openCommand.execute();<br/>
+}<br/>
+public void clickSave(){<br/>
+saveCommand.execute();<br/>
+}<br/>
+</br>
+</code>
+<br>
+<br>
+<text> Step 6</text>
+<text> Create a class <u style="color:red"> CommandPatternClient </u></text>
+<br/>
+<br/>
+<code>
+public class CommandPatternClient {</br>
+public static void main(String[] args) {</br>
+Document doc = new Document();</br>
+</br>
+ActionListenerCommand clickOpen = new ActionOpen(doc);</br>
+ActionListenerCommand clickSave = new ActionSave(doc);</br>
+</br>
+MenuOptions menu = new MenuOptions(clickOpen, clickSave);</br>
+</br>
+menu.clickOpen();</br>
+menu.clickSave();</br>
+</br>
+//Using a functional interface</br>
+ActionListenerCommand switchOn = doc::open;</br>
+ActionListenerCommand switchOff = doc::save;</br>
+</br>
+MenuOptions menu1 = new MenuOptions(switchOn, switchOff);</br>
+menu1.clickOpen();</br>
+menu1.clickOpen();</br>
+}</br>
+}</br>
+</br>
+</code>
+<a href="InterpreterPattern.html" class="right">Interpreter Pattern</a>
+</br>
+</br>
+</br>
+</body>
+</html>
